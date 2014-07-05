@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/japaric/simplot.rs.svg?branch=master)](https://travis-ci.org/japaric/simplot.rs)
 # simplot.rs
 
 Minimal (2D only) plotting library that calls the `gnuplot` binary to do the
