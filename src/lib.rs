@@ -1,8 +1,7 @@
 #![allow(unused_must_use)]
 #![feature(macro_rules)]
 
-// FIXME rust-lang/rust#15319 Remove `crate_id`
-#![crate_id = "simplot"]
+#![crate_name = "simplot"]
 
 pub use figure::Figure;
 
