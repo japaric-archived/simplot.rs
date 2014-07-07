@@ -4,10 +4,11 @@ before_install:
   - sudo apt-get update
 
 install:
-  - sudo apt-get install cargo rust-nightly
+  - sudo apt-get install cargo rust-nightly gnuplot
 
 script:
   - make
+  - make test
 
 branches:
   only: master
