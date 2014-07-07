@@ -2,7 +2,12 @@ use std::io::{Command,File};
 
 use data::Data;
 use line::Line;
-use option::{PlotOption,PointType,LineType};
+use option::{
+    LineType,
+    PlotOption,
+    PointType,
+    Title,
+};
 use plottype::PlotType;
 
 pub struct Figure {
@@ -92,8 +97,18 @@ impl Figure {
                     },
                     PointType(pt) => {
                         write!(l.args, " pt {}", pt);
-                    }
+                    },
+                    Title(s) => {
+                        write!(l.args, r#" title "{}""#, s);
+                    },
                 }
+            }
+
+            if !options.iter().any(|option| match *option {
+                Title(_) => true,
+                _ => false,
+            }) {
+                write!(l.args, " notitle");
             }
 
             write!(l.args, ",");
@@ -146,9 +161,6 @@ impl Figure {
         if self.lines.len() == 0 {
             fail!("Nothing to plot!");
         }
-
-        // XXX Disables legend
-        writeln!(dst, "set nokey");
 
         write!(dst, "plot");
         for line in self.lines.iter() {

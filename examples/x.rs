@@ -4,7 +4,7 @@ use std::io::stdio;
 
 use simplot::Figure;
 use simplot::linetype::SmallDot;
-use simplot::option::{LineType,PointType};
+use simplot::option::{LineType,PointType,Title};
 use simplot::plottype::{Lines,Points};
 use simplot::pointtype::Square;
 
@@ -15,7 +15,10 @@ fn main() {
         set_title("X").
         set_xlabel("x -->").
         set_ylabel("y -->").
-        plot(Points, range(0, 20u), range(0, 20u), [PointType(Square)]).
+        plot(Points,
+             range(0, 20u),
+             range(0, 20u),
+             [PointType(Square), Title("Rising")]).
         plot(Lines, range(0, 20u), range(0, 20u).rev(), [LineType(SmallDot)]).
         echo(&mut stdio::stdout()).
         draw();
