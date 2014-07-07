@@ -3,6 +3,7 @@ use std::io::{Command,File};
 use data::Data;
 use line::Line;
 use option::{PlotOption,LineType};
+use plottype::PlotType;
 
 pub struct Figure {
     lines: Vec<Line>,
@@ -61,6 +62,7 @@ impl Figure {
                 X: Iterator<A>,
                 Y: Iterator<B>>(
                 &'a mut self,
+                plot_type: PlotType,
                 xs: X,
                 ys: Y,
                 options: &[PlotOption])
@@ -81,7 +83,7 @@ impl Figure {
             write!(l.args, " record={}", nrecords);
             write!(l.args, r#" format="%float64""#);
             write!(l.args, " using 1:2");
-            write!(l.args, " with lines");
+            write!(l.args, " with {}", plot_type);
 
             for option in options.iter() {
                 match *option {
