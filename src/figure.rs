@@ -2,7 +2,7 @@ use std::io::{Command,File};
 
 use data::Data;
 use line::Line;
-use option::{PlotOption,LineType};
+use option::{PlotOption,PointType,LineType};
 use plottype::PlotType;
 
 pub struct Figure {
@@ -90,6 +90,9 @@ impl Figure {
                     LineType(lt) => {
                         write!(l.args, " lt {}", lt);
                     },
+                    PointType(pt) => {
+                        write!(l.args, " pt {}", pt);
+                    }
                 }
             }
 

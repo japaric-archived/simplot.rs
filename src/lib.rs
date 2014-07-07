@@ -13,3 +13,4 @@ mod line;
 pub mod linetype;
 pub mod option;
 pub mod plottype;
+pub mod pointtype;

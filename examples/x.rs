@@ -3,9 +3,10 @@ extern crate simplot;
 use std::io::stdio;
 
 use simplot::Figure;
-use simplot::linetype::{SmallDot,Solid};
-use simplot::option::LineType;
+use simplot::linetype::SmallDot;
+use simplot::option::{LineType,PointType};
 use simplot::plottype::{Lines,Points};
+use simplot::pointtype::Square;
 
 fn main() {
     Figure::new().
@@ -14,7 +15,7 @@ fn main() {
         set_title("X").
         set_xlabel("x -->").
         set_ylabel("y -->").
-        plot(Points, range(0, 20u), range(0, 20u), []).
+        plot(Points, range(0, 20u), range(0, 20u), [PointType(Square)]).
         plot(Lines, range(0, 20u), range(0, 20u).rev(), [LineType(SmallDot)]).
         echo(&mut stdio::stdout()).
         draw();
