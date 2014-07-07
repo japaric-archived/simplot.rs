@@ -4,7 +4,11 @@
 #![crate_name = "simplot"]
 
 pub use figure::Figure;
+pub use option::PlotOption;
 
 mod data;
 mod figure;
 mod line;
+
+pub mod option;
+pub mod linetype;

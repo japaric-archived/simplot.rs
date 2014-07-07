@@ -3,6 +3,8 @@ extern crate simplot;
 use std::io::stdio;
 
 use simplot::Figure;
+use simplot::option::LineType;
+use simplot::linetype::{SmallDot,Solid};
 
 fn main() {
     Figure::new().
@@ -11,8 +13,8 @@ fn main() {
         set_title("X").
         set_xlabel("x -->").
         set_ylabel("y -->").
-        plot(range(0, 3u), range(0, 3u)).
-        plot(range(0, 3u), range(0, 3u).rev()).
+        plot(range(0, 3u), range(0, 3u), [LineType(Solid)]).
+        plot(range(0, 3u), range(0, 3u).rev(), [LineType(SmallDot)]).
         echo(&mut stdio::stdout()).
         draw();
 }

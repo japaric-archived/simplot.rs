@@ -2,6 +2,7 @@ use std::io::{Command,File};
 
 use data::Data;
 use line::Line;
+use option::{PlotOption,LineType};
 
 pub struct Figure {
     lines: Vec<Line>,
@@ -61,7 +62,8 @@ impl Figure {
                 Y: Iterator<B>>(
                 &'a mut self,
                 xs: X,
-                ys: Y)
+                ys: Y,
+                options: &[PlotOption])
                 -> &'a mut Figure {
         self.lines.push(Line::new());
 
@@ -80,6 +82,15 @@ impl Figure {
             write!(l.args, r#" format="%float64""#);
             write!(l.args, " using 1:2");
             write!(l.args, " with lines");
+
+            for option in options.iter() {
+                match *option {
+                    LineType(lt) => {
+                        write!(l.args, " lt {}", lt);
+                    },
+                }
+            }
+
             write!(l.args, ",");
         }
 
@@ -96,10 +107,13 @@ impl Figure {
 
         match self.size {
             Some((width, height)) => {
-                writeln!(dst, "set terminal png size {}, {}", width, height);
+                writeln!(dst,
+                         "set terminal pngcairo dashed size {}, {}",
+                         width,
+                         height);
             },
             None => {
-                writeln!(dst, "set terminal png");
+                writeln!(dst, "set terminal pngcairo dashed");
             }
         }
 
