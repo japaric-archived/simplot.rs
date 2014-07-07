@@ -7,6 +7,9 @@ pub struct Figure {
     lines: Vec<Line>,
     output: Option<Path>,
     size: Option<(uint, uint)>,
+    title: Option<String>,
+    xlabel: Option<String>,
+    ylabel: Option<String>,
 }
 
 impl Figure {
@@ -15,6 +18,9 @@ impl Figure {
             lines: Vec::new(),
             output: None,
             size: None,
+            title: None,
+            xlabel: None,
+            ylabel: None,
         }
     }
 
@@ -30,15 +36,33 @@ impl Figure {
         self
     }
 
+    pub fn set_title<'a, T: ToStr>(&'a mut self, title: T) -> &'a mut Figure {
+        self.title = Some(title.to_str());
+
+        self
+    }
+
+    pub fn set_xlabel<'a, T: ToStr>(&'a mut self, label: T) -> &'a mut Figure {
+        self.xlabel = Some(label.to_str());
+
+        self
+    }
+
+    pub fn set_ylabel<'a, T: ToStr>(&'a mut self, label: T) -> &'a mut Figure {
+        self.ylabel = Some(label.to_str());
+
+        self
+    }
+
     pub fn plot<'a,
-            A: Data,
-            B: Data,
-            X: Iterator<A>,
-            Y: Iterator<B>>(
-            &'a mut self,
-            xs: X,
-            ys: Y)
-            -> &'a mut Figure {
+                A: Data,
+                B: Data,
+                X: Iterator<A>,
+                Y: Iterator<B>>(
+                &'a mut self,
+                xs: X,
+                ys: Y)
+                -> &'a mut Figure {
         self.lines.push(Line::new());
 
         {
@@ -77,6 +101,27 @@ impl Figure {
             None => {
                 writeln!(dst, "set terminal png");
             }
+        }
+
+        match self.title {
+            Some(ref title) => {
+                writeln!(dst, r#"set title "{}""#, title);
+            },
+            None => {},
+        }
+
+        match self.xlabel {
+            Some(ref label) => {
+                writeln!(dst, r#"set xlabel "{}""#, label);
+            },
+            None => {},
+        }
+
+        match self.ylabel {
+            Some(ref label) => {
+                writeln!(dst, r#"set ylabel "{}""#, label);
+            },
+            None => {},
         }
 
         if self.lines.len() == 0 {
