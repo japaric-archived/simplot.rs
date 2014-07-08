@@ -2,11 +2,3 @@
 name = "simplot"
 version = "0.0.0"
 authors = ["Jorge Aparicio <japaric@linux.com>"]
-
-[[lib]]
-name = "simplot"
-path = "src/lib.rs"
-
-[[bin]]
-name = "x"
-path = "examples/x.rs"
