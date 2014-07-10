@@ -43,20 +43,32 @@ impl Figure {
         self
     }
 
-    pub fn set_title<'a, T: ToStr>(&'a mut self, title: T) -> &'a mut Figure {
-        self.title = Some(title.to_str());
+    pub fn set_title<'a,
+                     T: ToString>(
+                     &'a mut self,
+                     title: T)
+                     -> &'a mut Figure {
+        self.title = Some(title.to_string());
 
         self
     }
 
-    pub fn set_xlabel<'a, T: ToStr>(&'a mut self, label: T) -> &'a mut Figure {
-        self.xlabel = Some(label.to_str());
+    pub fn set_xlabel<'a,
+                      T: ToString>(
+                      &'a mut self,
+                      label: T)
+                      -> &'a mut Figure {
+        self.xlabel = Some(label.to_string());
 
         self
     }
 
-    pub fn set_ylabel<'a, T: ToStr>(&'a mut self, label: T) -> &'a mut Figure {
-        self.ylabel = Some(label.to_str());
+    pub fn set_ylabel<'a,
+                      T: ToString>(
+                      &'a mut self,
+                      label: T)
+                      -> &'a mut Figure {
+        self.ylabel = Some(label.to_string());
 
         self
     }
