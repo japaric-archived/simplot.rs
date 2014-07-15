@@ -16,6 +16,7 @@ pub struct Figure {
     size: Option<(uint, uint)>,
     title: Option<String>,
     xlabel: Option<String>,
+    xtics: Option<Vec<(String, String)>>,
     ylabel: Option<String>,
 }
 
@@ -27,6 +28,7 @@ impl Figure {
             size: None,
             title: None,
             xlabel: None,
+            xtics: None,
             ylabel: None,
         }
     }
@@ -69,6 +71,22 @@ impl Figure {
                       label: T)
                       -> &'a mut Figure {
         self.ylabel = Some(label.to_string());
+
+        self
+    }
+
+    pub fn set_xtics<'a,
+                     A: Data,
+                     S: ToString,
+                     L: Iterator<S>,
+                     P: Iterator<A>>(
+                     &'a mut self,
+                     labels: L,
+                     positions: P)
+                     -> &'a mut Figure {
+        self.xtics = Some(labels.zip(positions).map(|(l, p)| {
+            (l.to_string(), format!("{}", p.get()))
+        }).collect());
 
         self
     }
@@ -232,6 +250,15 @@ impl Figure {
                 writeln!(dst, r#"set ylabel "{}""#, label);
             },
             None => {},
+        }
+
+        match self.xtics {
+            Some(ref tics) => {
+                writeln!(dst, "set xtics ({})", tics.iter().map(|&(ref l, ref p)| {
+                    format!(r#""{}" {}"#, l, p)
+                }).collect::<Vec<String>>().connect(", "));
+            },
+            None => {}
         }
 
         if self.lines.len() == 0 {

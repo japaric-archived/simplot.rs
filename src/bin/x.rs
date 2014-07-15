@@ -15,6 +15,7 @@ fn main() {
         set_title("X").
         set_xlabel("x -->").
         set_ylabel("y -->").
+        set_xtics(["Zero", "Five", "Ten"].iter(), [0, 5, 10u].iter()).
         plot(Points,
              range(0, 20u),
              range(0, 20u),
