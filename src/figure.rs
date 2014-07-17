@@ -16,6 +16,7 @@ pub struct Figure {
     size: Option<(uint, uint)>,
     title: Option<String>,
     xlabel: Option<String>,
+    xrange: Option<(f64, f64)>,
     xtics: Option<Vec<(String, String)>>,
     ylabel: Option<String>,
 }
@@ -28,6 +29,7 @@ impl Figure {
             size: None,
             title: None,
             xlabel: None,
+            xrange: None,
             xtics: None,
             ylabel: None,
         }
@@ -65,16 +67,6 @@ impl Figure {
         self
     }
 
-    pub fn set_ylabel<'a,
-                      T: ToString>(
-                      &'a mut self,
-                      label: T)
-                      -> &'a mut Figure {
-        self.ylabel = Some(label.to_string());
-
-        self
-    }
-
     pub fn set_xtics<'a,
                      A: Data,
                      S: ToString,
@@ -87,6 +79,27 @@ impl Figure {
         self.xtics = Some(labels.zip(positions).map(|(l, p)| {
             (l.to_string(), format!("{}", p.get()))
         }).collect());
+
+        self
+    }
+
+    pub fn set_xrange<'a,
+                      A: Data>(
+                      &'a mut self,
+                      range: (A, A))
+                      -> &'a mut Figure {
+        let (low, high) = range;
+        self.xrange = Some((low.get(), high.get()));
+
+        self
+    }
+
+    pub fn set_ylabel<'a,
+                      T: ToString>(
+                      &'a mut self,
+                      label: T)
+                      -> &'a mut Figure {
+        self.ylabel = Some(label.to_string());
 
         self
     }
@@ -245,13 +258,6 @@ impl Figure {
             None => {},
         }
 
-        match self.ylabel {
-            Some(ref label) => {
-                writeln!(dst, r#"set ylabel "{}""#, label);
-            },
-            None => {},
-        }
-
         match self.xtics {
             Some(ref tics) => {
                 writeln!(dst, "set xtics ({})", tics.iter().map(|&(ref l, ref p)| {
@@ -259,6 +265,24 @@ impl Figure {
                 }).collect::<Vec<String>>().connect(", "));
             },
             None => {}
+        }
+
+        match self.xrange {
+            Some((low, high)) => {
+                if low < high {
+                    writeln!(dst, "set xrange [{}:{}]", low, high);
+                } else {
+                    writeln!(dst, "set xrange [{}:{}] reverse", high, low);
+                }
+            },
+            None => {}
+        }
+
+        match self.ylabel {
+            Some(ref label) => {
+                writeln!(dst, r#"set ylabel "{}""#, label);
+            },
+            None => {},
         }
 
         if self.lines.len() == 0 {
