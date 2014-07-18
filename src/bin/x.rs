@@ -15,7 +15,7 @@ fn main() {
         set_size((1366, 768)).
         set_title("X").
         set_xlabel("x -->").
-        set_xtics(["Zero", "Five", "Ten"].iter(), [0, 5, 10u].iter()).
+        set_ytics(["Zero", "Five", "Ten"].iter(), [0, 5, 10u].iter()).
         set_xrange((-0.5f32, 22.5)).
         set_ylabel("y -->").
         plot(Points,
