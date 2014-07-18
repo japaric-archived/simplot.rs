@@ -23,7 +23,7 @@ fn main() {
              range(0, 20u),
              [PointType(Square), Title("Rising")]).
         plot(Lines, range(0, 20u), range(0, 20u).rev(), [LineType(SmallDot)]).
-        yerrorbars(range(0, 20u),
+        xerrorbars(range(0, 20u),
                    range(0, 20u).rev(),
                    range(-2i, 18).rev(),
                    range(1, 21u).rev(),

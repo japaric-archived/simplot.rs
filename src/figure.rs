@@ -201,6 +201,70 @@ impl Figure {
     }
 
     // TODO DRY: This method is similar to the `plot` method
+    pub fn xerrorbars<'a,
+                      A: Data,
+                      B: Data,
+                      C: Data,
+                      D: Data,
+                      X: Iterator<A>,
+                      Y: Iterator<B>,
+                      YL: Iterator<C>,
+                      YH: Iterator<D>>(
+                      &'a mut self,
+                      xs: X,
+                      ys: Y,
+                      ylows: YL,
+                      yhighs: YH,
+                      options: &[PlotOption])
+                      -> &'a mut Figure {
+        self.lines.push(Line::new());
+
+        {
+            let l = self.lines.mut_last().unwrap();
+
+            let mut nrecords = 0u;
+            for (((x, y), ylow), yhigh) in xs.zip(ys).zip(ylows).zip(yhighs) {
+                l.data.write_le_f64(x.get());
+                l.data.write_le_f64(y.get());
+                l.data.write_le_f64(ylow.get());
+                l.data.write_le_f64(yhigh.get());
+                nrecords += 1;
+            }
+
+            write!(l.args, " binary endian=little");
+            write!(l.args, " record={}", nrecords);
+            write!(l.args, r#" format="%float64""#);
+            write!(l.args, " using 1:2:3:4");
+            write!(l.args, " with xerrorbars");
+
+            for option in options.iter() {
+                match *option {
+                    LineType(lt) => {
+                        write!(l.args, " lt {}", lt);
+                    },
+                    PointType(pt) => {
+                        write!(l.args, " pt {}", pt);
+                    },
+                    Title(s) => {
+                        write!(l.args, r#" title "{}""#, s);
+                    },
+                }
+            }
+
+            if !options.iter().any(|option| match *option {
+                Title(_) => true,
+                _ => false,
+            }) {
+                write!(l.args, " notitle");
+            }
+
+            write!(l.args, ",");
+        }
+
+        self
+    }
+
+    // TODO DRY: This method is similar to the `plot` method
     pub fn yerrorbars<'a,
                       A: Data,
                       B: Data,
