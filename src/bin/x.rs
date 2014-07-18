@@ -13,6 +13,7 @@ fn main() {
         set_logscale((false, true)).
         set_output_file(Path::new("output.png")).
         set_size((1366, 768)).
+        set_font("Fantasque Sans Mono").
         set_title("X").
         set_xlabel("x -->").
         set_ytics(["Zero", "Five", "Ten"].iter(), [0, 5, 10u].iter()).

@@ -12,6 +12,7 @@ use option::{
 use plottype::PlotType;
 
 pub struct Figure {
+    font: Option<String>,
     lines: Vec<Line>,
     logscale: Option<(bool, bool)>,
     output: Option<Path>,
@@ -28,6 +29,7 @@ pub struct Figure {
 impl Figure {
     pub fn new() -> Figure {
         Figure {
+            font: None,
             lines: Vec::new(),
             logscale: None,
             output: None,
@@ -40,6 +42,12 @@ impl Figure {
             yrange: None,
             ytics: None,
         }
+    }
+
+    pub fn set_font<'a, S: ToString>(&'a mut self, font: S) -> &'a mut Figure {
+        self.font = Some(font.to_string());
+
+        self
     }
 
     pub fn set_logscale<'a>(&'a mut self, axes: (bool, bool)) -> &'a mut Figure {
@@ -349,17 +357,20 @@ impl Figure {
             None => fail!("No output file specified"),
         }
 
+        write!(dst, "set terminal pngcairo dashed");
         match self.size {
             Some((width, height)) => {
-                writeln!(dst,
-                         "set terminal pngcairo dashed size {}, {}",
-                         width,
-                         height);
+                write!(dst, " dashed size {}, {}", width, height);
             },
-            None => {
-                writeln!(dst, "set terminal pngcairo dashed");
-            }
+            None => {},
         }
+        match self.font {
+            Some(ref font) => {
+                write!(dst, " font '{}'", font);
+            },
+            None => {},
+        }
+        writeln!(dst, "");
 
         match self.title {
             Some(ref title) => {
