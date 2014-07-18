@@ -10,6 +10,7 @@ use simplot::pointtype::Square;
 
 fn main() {
     Figure::new().
+        set_logscale((false, true)).
         set_output_file(Path::new("output.png")).
         set_size((1366, 768)).
         set_title("X").

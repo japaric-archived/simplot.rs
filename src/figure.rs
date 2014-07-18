@@ -12,6 +12,7 @@ use plottype::PlotType;
 
 pub struct Figure {
     lines: Vec<Line>,
+    logscale: Option<(bool, bool)>,
     output: Option<Path>,
     size: Option<(uint, uint)>,
     title: Option<String>,
@@ -25,6 +26,7 @@ impl Figure {
     pub fn new() -> Figure {
         Figure {
             lines: Vec::new(),
+            logscale: None,
             output: None,
             size: None,
             title: None,
@@ -33,6 +35,12 @@ impl Figure {
             xtics: None,
             ylabel: None,
         }
+    }
+
+    pub fn set_logscale<'a>(&'a mut self, axes: (bool, bool)) -> &'a mut Figure {
+        self.logscale = Some(axes);
+
+        self
     }
 
     pub fn set_output_file<'a>(&'a mut self, path: Path) -> &'a mut Figure {
@@ -225,6 +233,19 @@ impl Figure {
     }
 
     pub fn echo<'a, W: Writer>(&'a mut self, dst: &mut W) -> &'a mut Figure {
+        match self.logscale {
+            Some((true, true)) => {
+                writeln!(dst, "set logscale xy");
+            },
+            Some((true, false)) => {
+                writeln!(dst, "set logscale x");
+            },
+            Some((false, true)) => {
+                writeln!(dst, "set logscale y");
+            },
+            _ => {},
+        }
+
         match self.output {
             Some(ref output) => {
                 writeln!(dst, "set output \"{}\"", output.display());
