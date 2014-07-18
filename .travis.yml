@@ -1,5 +1,6 @@
 before_install:
   - git clone --recursive https://github.com/rust-lang/cargo
+  - yes | sudo add-apt-repository ppa:gladky-anton/precise-backports
   - yes | sudo add-apt-repository ppa:hansjorg/rust
   - sudo apt-get update
 
