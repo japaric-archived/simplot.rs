@@ -1,4 +1,5 @@
-use std::io::{Command,File};
+use std::io::process::{Command,ProcessOutput};
+use std::io::File;
 
 use data::Data;
 use line::Line;
@@ -388,6 +389,17 @@ impl Figure {
             Ok(p) => p,
         };
 
-        self.echo(p.stdin.as_mut().unwrap())
+        self.echo(p.stdin.as_mut().unwrap());
+
+        match p.wait_with_output() {
+            Err(e) => fail!("{}", e),
+            Ok(ProcessOutput { error: err, status: exit, .. }) => if !exit.success() {
+                print!("{}", String::from_utf8_lossy(err.as_slice()));
+
+                fail!("runtime error");
+            }
+        }
+
+        self
     }
 }
