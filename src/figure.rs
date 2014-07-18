@@ -19,8 +19,9 @@ pub struct Figure {
     xlabel: Option<String>,
     xrange: Option<(f64, f64)>,
     xtics: Option<Vec<(String, String)>>,
-    ytics: Option<Vec<(String, String)>>,
     ylabel: Option<String>,
+    yrange: Option<(f64, f64)>,
+    ytics: Option<Vec<(String, String)>>,
 }
 
 impl Figure {
@@ -35,6 +36,7 @@ impl Figure {
             xrange: None,
             xtics: None,
             ylabel: None,
+            yrange: None,
             ytics: None,
         }
     }
@@ -77,6 +79,17 @@ impl Figure {
         self
     }
 
+    pub fn set_xrange<'a,
+                      A: Data>(
+                      &'a mut self,
+                      range: (A, A))
+                      -> &'a mut Figure {
+        let (low, high) = range;
+        self.xrange = Some((low.get(), high.get()));
+
+        self
+    }
+
     pub fn set_xtics<'a,
                      A: Data,
                      S: ToString,
@@ -93,6 +106,27 @@ impl Figure {
         self
     }
 
+    pub fn set_ylabel<'a,
+                      T: ToString>(
+                      &'a mut self,
+                      label: T)
+                      -> &'a mut Figure {
+        self.ylabel = Some(label.to_string());
+
+        self
+    }
+
+    pub fn set_yrange<'a,
+                      A: Data>(
+                      &'a mut self,
+                      range: (A, A))
+                      -> &'a mut Figure {
+        let (low, high) = range;
+        self.yrange = Some((low.get(), high.get()));
+
+        self
+    }
+
     pub fn set_ytics<'a,
                      A: Data,
                      S: ToString,
@@ -105,27 +139,6 @@ impl Figure {
         self.ytics = Some(labels.zip(positions).map(|(l, p)| {
             (l.to_string(), format!("{}", p.get()))
         }).collect());
-
-        self
-    }
-
-    pub fn set_xrange<'a,
-                      A: Data>(
-                      &'a mut self,
-                      range: (A, A))
-                      -> &'a mut Figure {
-        let (low, high) = range;
-        self.xrange = Some((low.get(), high.get()));
-
-        self
-    }
-
-    pub fn set_ylabel<'a,
-                      T: ToString>(
-                      &'a mut self,
-                      label: T)
-                      -> &'a mut Figure {
-        self.ylabel = Some(label.to_string());
 
         self
     }
@@ -297,15 +310,6 @@ impl Figure {
             None => {},
         }
 
-        match self.xtics {
-            Some(ref tics) => {
-                writeln!(dst, "set xtics ({})", tics.iter().map(|&(ref l, ref p)| {
-                    format!(r#""{}" {}"#, l, p)
-                }).collect::<Vec<String>>().connect(", "));
-            },
-            None => {}
-        }
-
         match self.xrange {
             Some((low, high)) => {
                 if low < high {
@@ -317,11 +321,31 @@ impl Figure {
             None => {}
         }
 
+        match self.xtics {
+            Some(ref tics) => {
+                writeln!(dst, "set xtics ({})", tics.iter().map(|&(ref l, ref p)| {
+                    format!(r#""{}" {}"#, l, p)
+                }).collect::<Vec<String>>().connect(", "));
+            },
+            None => {}
+        }
+
         match self.ylabel {
             Some(ref label) => {
                 writeln!(dst, r#"set ylabel "{}""#, label);
             },
             None => {},
+        }
+
+        match self.yrange {
+            Some((low, high)) => {
+                if low < high {
+                    writeln!(dst, "set yrange [{}:{}]", low, high);
+                } else {
+                    writeln!(dst, "set yrange [{}:{}] reverse", high, low);
+                }
+            },
+            None => {}
         }
 
         match self.ytics {
