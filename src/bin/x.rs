@@ -7,13 +7,15 @@ use simplot::linetype::SmallDot;
 use simplot::option::{LineType,PointType,Title};
 use simplot::plottype::{Lines,Points};
 use simplot::pointtype::Square;
+use simplot::terminal::Svg;
 
 fn main() {
     Figure::new().
-        set_logscale((false, true)).
-        set_output_file(Path::new("output.png")).
-        set_size((1366, 768)).
         set_font("Fantasque Sans Mono").
+        set_logscale((false, true)).
+        set_output_file(Path::new("output.svg")).
+        set_size((1366, 768)).
+        set_terminal(Svg).
         set_title("X").
         set_xlabel("x -->").
         set_ytics(["Zero", "Five", "Ten"].iter(), [0, 5, 10u].iter()).

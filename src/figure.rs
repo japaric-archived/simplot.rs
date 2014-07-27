@@ -10,6 +10,7 @@ use option::{
     Title,
 };
 use plottype::PlotType;
+use terminal::{Png,Terminal};
 
 pub struct Figure {
     font: Option<String>,
@@ -17,6 +18,7 @@ pub struct Figure {
     logscale: Option<(bool, bool)>,
     output: Option<Path>,
     size: Option<(uint, uint)>,
+    terminal: Option<Terminal>,
     title: Option<String>,
     xlabel: Option<String>,
     xrange: Option<(f64, f64)>,
@@ -34,6 +36,7 @@ impl Figure {
             logscale: None,
             output: None,
             size: None,
+            terminal: None,
             title: None,
             xlabel: None,
             xrange: None,
@@ -64,6 +67,12 @@ impl Figure {
 
     pub fn set_size<'a>(&'a mut self, size: (uint, uint)) -> &'a mut Figure {
         self.size = Some(size);
+
+        self
+    }
+
+    pub fn set_terminal<'a>(&'a mut self, terminal: Terminal) -> &'a mut Figure {
+        self.terminal = Some(terminal);
 
         self
     }
@@ -357,7 +366,17 @@ impl Figure {
             None => fail!("No output file specified"),
         }
 
-        write!(dst, "set terminal pngcairo dashed");
+        if self.terminal.is_none() {
+            self.terminal = Some(Png);
+        }
+
+        match self.terminal {
+            Some(ref terminal) => {
+                write!(dst, "set terminal {}", terminal);
+            },
+            None => {},
+        }
+
         match self.size {
             Some((width, height)) => {
                 write!(dst, " dashed size {}, {}", width, height);
