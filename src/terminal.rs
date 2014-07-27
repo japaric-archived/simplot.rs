@@ -13,7 +13,7 @@ impl Show for Terminal {
                 write!(f, "pngcairo")
             },
             Svg => {
-                write!(f, "svg")
+                write!(f, "svg dynamic")
             },
         }
     }
