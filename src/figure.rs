@@ -47,76 +47,72 @@ impl Figure {
         }
     }
 
-    pub fn set_font<'a, S: ToString>(&'a mut self, font: S) -> &'a mut Figure {
+    pub fn set_font<S: ToString>(&mut self, font: S) -> &mut Figure {
         self.font = Some(font.to_string());
 
         self
     }
 
-    pub fn set_logscale<'a>(&'a mut self, axes: (bool, bool)) -> &'a mut Figure {
+    pub fn set_logscale(&mut self, axes: (bool, bool)) -> &mut Figure {
         self.logscale = Some(axes);
 
         self
     }
 
-    pub fn set_output_file<'a>(&'a mut self, path: Path) -> &'a mut Figure {
+    pub fn set_output_file(&mut self, path: Path) -> &mut Figure {
         self.output = Some(path);
 
         self
     }
 
-    pub fn set_size<'a>(&'a mut self, size: (uint, uint)) -> &'a mut Figure {
+    pub fn set_size(&mut self, size: (uint, uint)) -> &mut Figure {
         self.size = Some(size);
 
         self
     }
 
-    pub fn set_terminal<'a>(&'a mut self, terminal: Terminal) -> &'a mut Figure {
+    pub fn set_terminal(&mut self, terminal: Terminal) -> &mut Figure {
         self.terminal = Some(terminal);
 
         self
     }
 
-    pub fn set_title<'a,
-                     T: ToString>(
-                     &'a mut self,
+    pub fn set_title<T: ToString>(
+                     &mut self,
                      title: T)
-                     -> &'a mut Figure {
+                     -> &mut Figure {
         self.title = Some(title.to_string());
 
         self
     }
 
-    pub fn set_xlabel<'a,
-                      T: ToString>(
-                      &'a mut self,
+    pub fn set_xlabel<T: ToString>(
+                      &mut self,
                       label: T)
-                      -> &'a mut Figure {
+                      -> &mut Figure {
         self.xlabel = Some(label.to_string());
 
         self
     }
 
-    pub fn set_xrange<'a,
-                      A: Data>(
-                      &'a mut self,
+    pub fn set_xrange<A: Data>(
+                      &mut self,
                       range: (A, A))
-                      -> &'a mut Figure {
+                      -> &mut Figure {
         let (low, high) = range;
         self.xrange = Some((low.get(), high.get()));
 
         self
     }
 
-    pub fn set_xtics<'a,
-                     A: Data,
+    pub fn set_xtics<A: Data,
                      S: ToString,
                      L: Iterator<S>,
                      P: Iterator<A>>(
-                     &'a mut self,
+                     &mut self,
                      labels: L,
                      positions: P)
-                     -> &'a mut Figure {
+                     -> &mut Figure {
         self.xtics = Some(labels.zip(positions).map(|(l, p)| {
             (l.to_string(), format!("{}", p.get()))
         }).collect());
@@ -124,36 +120,33 @@ impl Figure {
         self
     }
 
-    pub fn set_ylabel<'a,
-                      T: ToString>(
-                      &'a mut self,
+    pub fn set_ylabel<T: ToString>(
+                      &mut self,
                       label: T)
-                      -> &'a mut Figure {
+                      -> &mut Figure {
         self.ylabel = Some(label.to_string());
 
         self
     }
 
-    pub fn set_yrange<'a,
-                      A: Data>(
-                      &'a mut self,
+    pub fn set_yrange<A: Data>(
+                      &mut self,
                       range: (A, A))
-                      -> &'a mut Figure {
+                      -> &mut Figure {
         let (low, high) = range;
         self.yrange = Some((low.get(), high.get()));
 
         self
     }
 
-    pub fn set_ytics<'a,
-                     A: Data,
+    pub fn set_ytics<A: Data,
                      S: ToString,
                      L: Iterator<S>,
                      P: Iterator<A>>(
-                     &'a mut self,
+                     &mut self,
                      labels: L,
                      positions: P)
-                     -> &'a mut Figure {
+                     -> &mut Figure {
         self.ytics = Some(labels.zip(positions).map(|(l, p)| {
             (l.to_string(), format!("{}", p.get()))
         }).collect());
@@ -161,17 +154,16 @@ impl Figure {
         self
     }
 
-    pub fn plot<'a,
-                A: Data,
+    pub fn plot<A: Data,
                 B: Data,
                 X: Iterator<A>,
                 Y: Iterator<B>>(
-                &'a mut self,
+                &mut self,
                 plot_type: PlotType,
                 xs: X,
                 ys: Y,
                 options: &[PlotOption])
-                -> &'a mut Figure {
+                -> &mut Figure {
         self.lines.push(Line::new());
 
         {
@@ -218,8 +210,7 @@ impl Figure {
     }
 
     // TODO DRY: This method is similar to the `plot` method
-    pub fn xerrorbars<'a,
-                      A: Data,
+    pub fn xerrorbars<A: Data,
                       B: Data,
                       C: Data,
                       D: Data,
@@ -227,13 +218,13 @@ impl Figure {
                       Y: Iterator<B>,
                       YL: Iterator<C>,
                       YH: Iterator<D>>(
-                      &'a mut self,
+                      &mut self,
                       xs: X,
                       ys: Y,
                       ylows: YL,
                       yhighs: YH,
                       options: &[PlotOption])
-                      -> &'a mut Figure {
+                      -> &mut Figure {
         self.lines.push(Line::new());
 
         {
@@ -282,8 +273,7 @@ impl Figure {
     }
 
     // TODO DRY: This method is similar to the `plot` method
-    pub fn yerrorbars<'a,
-                      A: Data,
+    pub fn yerrorbars<A: Data,
                       B: Data,
                       C: Data,
                       D: Data,
@@ -291,13 +281,13 @@ impl Figure {
                       Y: Iterator<B>,
                       YL: Iterator<C>,
                       YH: Iterator<D>>(
-                      &'a mut self,
+                      &mut self,
                       xs: X,
                       ys: Y,
                       ylows: YL,
                       yhighs: YH,
                       options: &[PlotOption])
-                      -> &'a mut Figure {
+                      -> &mut Figure {
         self.lines.push(Line::new());
 
         {
@@ -345,7 +335,7 @@ impl Figure {
         self
     }
 
-    pub fn echo<'a, W: Writer>(&'a mut self, dst: &mut W) -> &'a mut Figure {
+    pub fn echo<W: Writer>(&mut self, dst: &mut W) -> &mut Figure {
         match self.logscale {
             Some((true, true)) => {
                 writeln!(dst, "set logscale xy");
@@ -470,14 +460,14 @@ impl Figure {
         self
     }
 
-    pub fn save_script<'a>(&'a mut self, path: &Path) -> &'a mut Figure {
+    pub fn save_script(&mut self, path: &Path) -> &mut Figure {
         match File::create(path) {
             Err(e) => fail!("Couldn't create {}: {}", path.display(), e),
             Ok(mut f) => self.echo(&mut f),
         }
     }
 
-    pub fn draw<'a>(&'a mut self) -> &'a mut Figure {
+    pub fn draw(&mut self) -> &mut Figure {
         let mut p = match Command::new("gnuplot").spawn() {
             Err(e) => fail!("`gnuplot`: {}", e),
             Ok(p) => p,
