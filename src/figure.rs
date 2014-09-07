@@ -1,4 +1,4 @@
-use std::io::process::{Command,ProcessOutput};
+use std::io::process::{Command, ProcessOutput};
 use std::io::File;
 
 use data::Data;
@@ -10,7 +10,7 @@ use option::{
     Title,
 };
 use plottype::PlotType;
-use terminal::{Png,Terminal};
+use terminal::{Png, Terminal};
 
 pub struct Figure {
     font: Option<String>,

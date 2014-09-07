@@ -1,4 +1,4 @@
-use std::fmt::{Formatter,Show};
+use std::fmt::{Formatter, Show};
 use std::fmt;
 
 pub enum PlotType {

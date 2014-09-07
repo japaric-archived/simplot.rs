@@ -4,12 +4,13 @@ use std::io::stdio;
 
 use simplot::Figure;
 use simplot::linetype::SmallDot;
-use simplot::option::{LineType,PointType,Title};
-use simplot::plottype::{Lines,Points};
+use simplot::option::{LineType, PointType, Title};
+use simplot::plottype::{Lines, Points};
 use simplot::pointtype::Square;
 use simplot::terminal::Svg;
 
-fn main() {
+#[test]
+fn x() {
     Figure::new().
         set_font("Fantasque Sans Mono").
         set_logscale((false, true)).

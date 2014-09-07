@@ -1,18 +1,17 @@
+language: rust
+
 before_install:
-  - curl -O http://static.rust-lang.org/cargo-dist/cargo-nightly-x86_64-unknown-linux-gnu.tar.gz
-  - tar xf cargo-nightly-x86_64-unknown-linux-gnu.tar.gz
-  - yes | sudo add-apt-repository ppa:gladky-anton/precise-backports
-  - yes | sudo add-apt-repository ppa:hansjorg/rust
-  - sudo apt-get update
+  # This PPA has a newer version of gnuplot
+  - sudo add-apt-repository ppa:gladky-anton/precise-backports -y
+  - sudo apt-get update -qq
 
 install:
-  - sudo apt-get install rust-nightly gnuplot
-  - sudo cargo-nightly-x86_64-unknown-linux-gnu/install.sh
-  - sudo rm -rf cargo-nightly-x86_64-unknown-linux-gnu
+  - sudo apt-get install -qq gnuplot
 
 script:
-  - make
-  - make test
+  - cargo build --verbose
+  - cargo test --verbose
+  - ./check-line-length.sh
 
 branches:
   only: master
