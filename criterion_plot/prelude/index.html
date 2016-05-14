@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `prelude` mod in crate `criterion_plot`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, prelude">
+
+    <title>criterion_plot::prelude - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css">
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'><a href='../index.html'>criterion_plot</a></p><script>window.sidebarCurrent = {name: 'prelude', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content mod">
+<h1 class='fqn'><span class='in-band'>Module <a href='../index.html'>criterion_plot</a>::<wbr><a class='mod' href=''>prelude</a></span><span class='out-of-band'><span id='render-detail'>
+            <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                [<span class='inner'>&#x2212;</span>]
+            </a>
+        </span><a id='src-1047' class='srclink' href='../../src/criterion_plot/src/prelude.rs.html#1-11' title='goto source code'>[src]</a></span></h1>
+<div class='docblock'><p>A collection of the most used traits, structs and enums</p>
+</div><h2 id='reexports' class='section-header'><a href="#reexports">Reexports</a></h2>
+<table><tr><td><code>pub use ::{<a class='enum' href='../../criterion_plot/enum.Axes.html' title='criterion_plot::Axes'>Axes</a>, <a class='enum' href='../../criterion_plot/enum.Axis.html' title='criterion_plot::Axis'>Axis</a>, <a class='struct' href='../../criterion_plot/struct.BoxWidth.html' title='criterion_plot::BoxWidth'>BoxWidth</a>, <a class='enum' href='../../criterion_plot/enum.Color.html' title='criterion_plot::Color'>Color</a>, <a class='struct' href='../../criterion_plot/struct.Figure.html' title='criterion_plot::Figure'>Figure</a>, <a class='struct' href='../../criterion_plot/struct.FontSize.html' title='criterion_plot::FontSize'>FontSize</a>, <a class='enum' href='../../criterion_plot/enum.Grid.html' title='criterion_plot::Grid'>Grid</a>, <a class='struct' href='../../criterion_plot/struct.Key.html' title='criterion_plot::Key'>Key</a>, <a class='enum' href='../../criterion_plot/enum.LineType.html' title='criterion_plot::LineType'>LineType</a>, <a class='struct' href='../../criterion_plot/struct.LineWidth.html' title='criterion_plot::LineWidth'>LineWidth</a>, <a class='struct' href='../../criterion_plot/struct.Opacity.html' title='criterion_plot::Opacity'>Opacity</a>, <a class='struct' href='../../criterion_plot/struct.PointSize.html' title='criterion_plot::PointSize'>PointSize</a>, <a class='enum' href='../../criterion_plot/enum.PointType.html' title='criterion_plot::PointType'>PointType</a>, <a class='enum' href='../../criterion_plot/enum.Range.html' title='criterion_plot::Range'>Range</a>, <a class='enum' href='../../criterion_plot/enum.Scale.html' title='criterion_plot::Scale'>Scale</a>, <a class='struct' href='../../criterion_plot/struct.ScaleFactor.html' title='criterion_plot::ScaleFactor'>ScaleFactor</a>, <a class='struct' href='../../criterion_plot/struct.Size.html' title='criterion_plot::Size'>Size</a>, <a class='enum' href='../../criterion_plot/enum.Terminal.html' title='criterion_plot::Terminal'>Terminal</a>, <a class='struct' href='../../criterion_plot/struct.TicLabels.html' title='criterion_plot::TicLabels'>TicLabels</a>};</code></td></tr><tr><td><code>pub use candlestick::<a class='struct' href='../../criterion_plot/candlestick/struct.Candlesticks.html' title='criterion_plot::candlestick::Candlesticks'>Candlesticks</a>;</code></td></tr><tr><td><code>pub use curve::Curve::{<a class='enum' href='../../criterion_plot/curve/enum.Curve.html' title='criterion_plot::curve::Curve'>Dots</a>, <a class='enum' href='../../criterion_plot/curve/enum.Curve.html' title='criterion_plot::curve::Curve'>Impulses</a>, <a class='enum' href='../../criterion_plot/curve/enum.Curve.html' title='criterion_plot::curve::Curve'>Lines</a>, <a class='enum' href='../../criterion_plot/curve/enum.Curve.html' title='criterion_plot::curve::Curve'>LinesPoints</a>, <a class='enum' href='../../criterion_plot/curve/enum.Curve.html' title='criterion_plot::curve::Curve'>Points</a>, <a class='enum' href='../../criterion_plot/curve/enum.Curve.html' title='criterion_plot::curve::Curve'>Steps</a>};</code></td></tr><tr><td><code>pub use errorbar::ErrorBar::{<a class='enum' href='../../criterion_plot/errorbar/enum.ErrorBar.html' title='criterion_plot::errorbar::ErrorBar'>XErrorBars</a>, <a class='enum' href='../../criterion_plot/errorbar/enum.ErrorBar.html' title='criterion_plot::errorbar::ErrorBar'>XErrorLines</a>, <a class='enum' href='../../criterion_plot/errorbar/enum.ErrorBar.html' title='criterion_plot::errorbar::ErrorBar'>YErrorBars</a>, <a class='enum' href='../../criterion_plot/errorbar/enum.ErrorBar.html' title='criterion_plot::errorbar::ErrorBar'>YErrorLines</a>};</code></td></tr><tr><td><code>pub use filledcurve::<a class='struct' href='../../criterion_plot/filledcurve/struct.FilledCurve.html' title='criterion_plot::filledcurve::FilledCurve'>FilledCurve</a>;</code></td></tr><tr><td><code>pub use key::{<a class='enum' href='../../criterion_plot/key/enum.Boxed.html' title='criterion_plot::key::Boxed'>Boxed</a>, <a class='enum' href='../../criterion_plot/key/enum.Horizontal.html' title='criterion_plot::key::Horizontal'>Horizontal</a>, <a class='enum' href='../../criterion_plot/key/enum.Justification.html' title='criterion_plot::key::Justification'>Justification</a>, <a class='enum' href='../../criterion_plot/key/enum.Order.html' title='criterion_plot::key::Order'>Order</a>, <a class='enum' href='../../criterion_plot/key/enum.Position.html' title='criterion_plot::key::Position'>Position</a>, <a class='enum' href='../../criterion_plot/key/enum.Stacked.html' title='criterion_plot::key::Stacked'>Stacked</a>, <a class='enum' href='../../criterion_plot/key/enum.Vertical.html' title='criterion_plot::key::Vertical'>Vertical</a>};</code></td></tr><tr><td><code>pub use proxy::{<a class='fn' href='../../criterion_plot/proxy/fn.Font.html' title='criterion_plot::proxy::Font'>Font</a>, <a class='fn' href='../../criterion_plot/proxy/fn.Label.html' title='criterion_plot::proxy::Label'>Label</a>, <a class='fn' href='../../criterion_plot/proxy/fn.Output.html' title='criterion_plot::proxy::Output'>Output</a>, <a class='fn' href='../../criterion_plot/proxy/fn.Title.html' title='criterion_plot::proxy::Title'>Title</a>};</code></td></tr><tr><td><code>pub use traits::{<a class='trait' href='../../criterion_plot/traits/trait.Configure.html' title='criterion_plot::traits::Configure'>Configure</a>, <a class='trait' href='../../criterion_plot/traits/trait.Plot.html' title='criterion_plot::traits::Plot'>Plot</a>, <a class='trait' href='../../criterion_plot/traits/trait.Set.html' title='criterion_plot::traits::Set'>Set</a>};</code></td></tr></table></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../../";
+        window.currentCrate = "criterion_plot";
+        window.playgroundUrl = "";
+    </script>
+    <script src="../../jquery.js"></script>
+    <script src="../../main.js"></script>
+    
+    <script defer src="../../search-index.js"></script>
+</body>
+</html>
